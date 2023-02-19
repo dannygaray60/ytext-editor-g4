@@ -15,7 +15,6 @@ run/main_scene="res://screens/editor.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="YTextEditorData"
 config/features=PackedStringArray("4.0", "Mobile")
-run/max_fps=24
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
 boot_splash/show_image=false
