@@ -1,0 +1,365 @@
+[gd_scene load_steps=32 format=3 uid="uid://sggf40ljospm"]
+
+[ext_resource type="Script" path="res://screens/editor.gd" id="1_in4mq"]
+[ext_resource type="Texture2D" uid="uid://btigjskuhlw1d" path="res://assets/icons/close.png" id="2_jqjc2"]
+[ext_resource type="Texture2D" uid="uid://dghkhwm5fs752" path="res://assets/icons/save.png" id="2_xvm2s"]
+[ext_resource type="PackedScene" uid="uid://edmayy17mi64" path="res://ui/button_texture.tscn" id="3_mg235"]
+[ext_resource type="Texture2D" uid="uid://rtp463yao1bo" path="res://assets/icons/sun.png" id="5_f4odi"]
+[ext_resource type="Texture2D" uid="uid://kaw1h3xal4n6" path="res://assets/icons/file.png" id="5_fqogy"]
+[ext_resource type="Texture2D" uid="uid://brvbcvo0lu28f" path="res://assets/icons/align-left.png" id="6_ext7j"]
+[ext_resource type="Texture2D" uid="uid://7c3y764ou5v5" path="res://assets/icons/settings.png" id="6_vy2x1"]
+[ext_resource type="Texture2D" uid="uid://dx26nalndwqai" path="res://assets/icons/align-center.png" id="7_b3oko"]
+[ext_resource type="Texture2D" uid="uid://c62048myt5sgt" path="res://assets/icons/zoom-in.png" id="7_tkjaa"]
+[ext_resource type="Texture2D" uid="uid://j2wjkh4lg1jo" path="res://assets/icons/zoom-out.png" id="8_dr386"]
+[ext_resource type="Texture2D" uid="uid://drh2f17w0pphi" path="res://assets/icons/info.png" id="9_b0o4n"]
+[ext_resource type="Texture2D" uid="uid://cyr244x6km5am" path="res://assets/icons/fullscreen.png" id="9_cfbs0"]
+[ext_resource type="Texture2D" uid="uid://c3bsol8l4iau3" path="res://assets/icons/win-min.png" id="10_5ph88"]
+[ext_resource type="Texture2D" uid="uid://drlsn081rraqt" path="res://assets/icons/win-close.png" id="12_ciwaq"]
+[ext_resource type="Texture2D" uid="uid://bv07oqc2m83u4" path="res://assets/icons/align-bottom.png" id="16_0qa8i"]
+[ext_resource type="Texture2D" uid="uid://bmi1h71gk0a8y" path="res://assets/icons/volume.png" id="16_5hsol"]
+[ext_resource type="Texture2D" uid="uid://rd2p2en4205o" path="res://assets/icons/font-size.png" id="16_86duv"]
+[ext_resource type="AudioStream" uid="uid://rsdkhd5u8aa" path="res://assets/sfx/write.wav" id="17_1pjmf"]
+[ext_resource type="AudioStream" uid="uid://ba3ha63i8aeqv" path="res://assets/sfx/space.wav" id="18_cyvhn"]
+[ext_resource type="AudioStream" uid="uid://8uaol2uojs0j" path="res://assets/sfx/new_line.wav" id="19_q0vu6"]
+[ext_resource type="AudioStream" uid="uid://b5h1gsutkilhn" path="res://assets/sfx/backspace.wav" id="20_mx4x0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwnon"]
+bg_color = Color(0, 0, 0, 0.847059)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_obbnp"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2h4kd"]
+color = Color(0.443137, 0.443137, 0.443137, 1)
+grow_begin = -7.0
+grow_end = -7.0
+vertical = true
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_illet"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6rod"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.168627, 0.168627, 0.168627, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6q7jq"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.168627, 0.168627, 0.168627, 0)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0.8, 0.8, 0.8, 0.478431)
+
+[sub_resource type="FontVariation" id="FontVariation_wtvxt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wyt2n"]
+bg_color = Color(1, 1, 1, 0.105882)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4os7h"]
+
+[node name="Editor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_in4mq")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Write" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("17_1pjmf")
+
+[node name="Space" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("18_cyvhn")
+
+[node name="NewLine" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("19_q0vu6")
+
+[node name="Save" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("19_q0vu6")
+pitch_scale = 1.65
+
+[node name="BackSpace" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("20_mx4x0")
+
+[node name="Move" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("20_mx4x0")
+pitch_scale = 1.75
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hwnon")
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="EmptySpace" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_obbnp")
+
+[node name="BtnCloseFile" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+unique_name_in_owner = true
+self_modulate = Color(0.737255, 0.196078, 0.364706, 1)
+layout_mode = 2
+texture_normal = ExtResource("2_jqjc2")
+
+[node name="LabelFileName" type="Label" parent="Panel/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.294118)
+layout_mode = 2
+text = "File name..."
+
+[node name="VSeparator3" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_2h4kd")
+
+[node name="BtnOpenFile" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+layout_mode = 2
+focus_mode = 0
+
+[node name="BtnSave" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.207843, 0.494118, 0.388235, 1)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("2_xvm2s")
+
+[node name="BtnExportText" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+unique_name_in_owner = true
+self_modulate = Color(0.509804, 0.321569, 0.721569, 1)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("5_fqogy")
+
+[node name="VSeparator2" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+visible = false
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_2h4kd")
+
+[node name="BtnAlignL" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+self_modulate = Color(0.52549, 0.290196, 0.14902, 1)
+layout_mode = 2
+texture_normal = ExtResource("6_ext7j")
+
+[node name="BtnAlignC" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+self_modulate = Color(0.52549, 0.290196, 0.14902, 1)
+layout_mode = 2
+texture_normal = ExtResource("7_b3oko")
+
+[node name="BtnMoveWindow" type="Button" parent="Panel/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 13
+theme_override_colors/font_color = Color(1, 1, 1, 0.207843)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_illet")
+flat = true
+
+[node name="BtnDarkmode" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("5_f4odi")
+
+[node name="BtnZoomPlus" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("7_tkjaa")
+
+[node name="BtnZoomOut" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("8_dr386")
+
+[node name="BtnSettings" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+visible = false
+layout_mode = 2
+texture_normal = ExtResource("6_vy2x1")
+
+[node name="BtnExtraLine" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.380392, 0.466667, 0.294118, 1)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("16_0qa8i")
+setting_key = "extra_new_line"
+
+[node name="BtnUppercase" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.380392, 0.466667, 0.294118, 1)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("16_86duv")
+setting_key = "first_letter_line_upper"
+
+[node name="BtnSound" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.380392, 0.466667, 0.294118, 1)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("16_5hsol")
+setting_key = "machine_typewriter_sfx"
+
+[node name="VSeparator7" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_constants/separation = 26
+theme_override_styles/separator = SubResource("StyleBoxLine_2h4kd")
+
+[node name="EmptySpace2" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_constants/separation = 13
+theme_override_styles/separator = SubResource("StyleBoxEmpty_obbnp")
+
+[node name="BtnMinimize" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = ExtResource("10_5ph88")
+stretch_mode = 5
+play_sfx = false
+
+[node name="BtnMaximize" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.298039, 0.580392, 0.760784, 1)
+layout_mode = 2
+texture_normal = ExtResource("9_cfbs0")
+stretch_mode = 5
+play_sfx = false
+
+[node name="BtnCloseWin" parent="Panel/PanelContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(0.737255, 0.196078, 0.364706, 1)
+layout_mode = 2
+texture_normal = ExtResource("12_ciwaq")
+stretch_mode = 5
+play_sfx = false
+
+[node name="EmptySpace3" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.396078)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_obbnp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VSplitContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.121569)
+layout_mode = 2
+texture = ExtResource("9_b0o4n")
+stretch_mode = 3
+
+[node name="TextEditNotes" type="TextEdit" parent="MarginContainer/VBoxContainer/VSplitContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.396078)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.176471)
+theme_override_styles/normal = SubResource("StyleBoxFlat_c6rod")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6q7jq")
+placeholder_text = "notes..."
+wrap_mode = 1
+caret_blink = true
+
+[node name="TextEditField" type="CodeEdit" parent="MarginContainer/VBoxContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 307)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/background_color = Color(0.054902, 0.054902, 0.054902, 1)
+theme_override_colors/current_line_color = Color(0.545098, 0, 0.0117647, 0.231373)
+theme_override_colors/brace_mismatch_color = Color(1, 1, 1, 1)
+theme_override_colors/line_number_color = Color(1, 1, 1, 0.0941176)
+theme_override_fonts/font = SubResource("FontVariation_wtvxt")
+theme_override_font_sizes/font_size = 34
+theme_override_styles/normal = SubResource("StyleBoxFlat_wyt2n")
+text = "Este es un ejemplo de texto..."
+wrap_mode = 1
+highlight_current_line = true
+caret_blink = true
+gutters_draw_line_numbers = true
+delimiter_strings = Array[String]([])
+auto_brace_completion_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="BtnClearLineNote" parent="MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_mg235")]
+self_modulate = Color(1, 1, 1, 0.168627)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("12_ciwaq")
+
+[node name="LineEditLineNote" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.384314)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.176471)
+theme_override_styles/normal = SubResource("StyleBoxFlat_c6rod")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4os7h")
+placeholder_text = "line notes..."
+flat = true
+caret_blink = true
+
+[node name="FileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+size = Vector2i(452, 162)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.ytxt;YText File", "*.txt;Text File")
+
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnCloseFile" to="." method="close_file"]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnOpenFile" to="." method="_on_btn_open_file_pressed"]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnSave" to="." method="save_file"]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnExportText" to="." method="_on_btn_export_text_pressed"]
+[connection signal="button_down" from="Panel/PanelContainer/HBoxContainer/BtnMoveWindow" to="." method="_on_btn_move_window_button_down"]
+[connection signal="button_up" from="Panel/PanelContainer/HBoxContainer/BtnMoveWindow" to="." method="_on_btn_move_window_button_up"]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnMinimize" to="." method="_on_btn_win_action" binds= ["min"]]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnMaximize" to="." method="_on_btn_win_action" binds= ["max"]]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnCloseWin" to="." method="_on_btn_win_action" binds= ["close"]]
+[connection signal="caret_changed" from="MarginContainer/VBoxContainer/VSplitContainer/TextEditField" to="." method="_on_text_edit_field_caret_changed"]
+[connection signal="lines_edited_from" from="MarginContainer/VBoxContainer/VSplitContainer/TextEditField" to="." method="_on_text_edit_field_lines_edited_from"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BtnClearLineNote" to="." method="_on_btn_clear_line_note_pressed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/LineEditLineNote" to="." method="_on_line_edit_line_note_text_changed"]
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/LineEditLineNote" to="." method="_on_line_edit_line_note_text_submitted"]
+[connection signal="file_selected" from="FileDialog" to="." method="open_file"]
