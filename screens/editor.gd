@@ -12,8 +12,8 @@ var _drag_position : Vector2
 
 var _config_path : String = "user://settings.ini"
 
-@onready var TxtNotes := $MarginContainer/VBoxContainer/VSplitContainer/HBoxContainer/TextEditNotes
-@onready var TxtEdit := $MarginContainer/VBoxContainer/VSplitContainer/TextEditField
+@onready var TxtNotes := $MarginContainer/VBoxContainer/VSplitContainerTxtFields/HBoxContainer/TextEditNotes
+@onready var TxtEdit := $MarginContainer/VBoxContainer/VSplitContainerTxtFields/TextEditField
 @onready var TxtLineNote :=  $MarginContainer/VBoxContainer/HBoxContainer/LineEditLineNote
 
 @onready var BtnSoundEnabled := $Panel/PanelContainer/HBoxContainer/BtnSound
@@ -26,15 +26,19 @@ var _config_path : String = "user://settings.ini"
 @onready var sfx_backspace := $Audio/BackSpace
 @onready var sfx_move := $Audio/Move
 @onready var sfx_save := $Audio/Save
+@onready var sfx_openfile := $Audio/OpenFilePath
 
 func _ready() -> void:
 	
 	reset_fields_vars()
 	
 	Cnf.load(_config_path)
+	
 	var recent_file : String = Cnf.get_value("misc", "recent_file", "")
 	if recent_file.is_empty() == false:
 		open_file(recent_file)
+	
+	get_node("%VSplitContainerTxtFields").split_offset = Cnf.get_value("options", "vsplit_offset", 0)
 
 #	var syntax = CodeHighlighter.new()
 #	syntax.clear_color_regions()
@@ -130,6 +134,8 @@ func save_file() -> void:
 		_save_to_file(opened_filepath)
 
 func close_file() -> void:
+	Cnf.set_value("misc", "recent_file", "")
+	Cnf.save(_config_path)
 	reset_fields_vars()
 
 func set_vars(filepath:String) -> void:
@@ -140,7 +146,8 @@ func set_vars(filepath:String) -> void:
 		get_node("%BtnExportText").visible = false
 	
 	opened_filepath = filepath
-	get_node("%LabelFileName").text = filepath.get_file()
+	get_node("%BtnFileName").text = filepath.get_file()
+	get_node("%BtnFileName").uri = filepath.get_base_dir()
 	get_node("%BtnCloseFile").visible = true
 	
 	Cnf.set_value("misc", "recent_file", filepath)
@@ -148,7 +155,8 @@ func set_vars(filepath:String) -> void:
 
 func reset_fields_vars() -> void:
 	get_node("%BtnExportText").visible = false
-	get_node("%LabelFileName").text = "YText Editor"
+	get_node("%BtnFileName").text = "YText Editor"
+	get_node("%BtnFileName").uri = "https://github.com/dannygaray60"
 	get_node("%BtnCloseFile").visible = false
 	opened_filepath = ""
 	lines_notes = {}
@@ -267,3 +275,12 @@ func _on_btn_export_text_pressed() -> void:
 		var F := FileAccess.open(exported_filepath, FileAccess.WRITE)
 		if FileAccess.get_open_error() == OK:
 				F.store_string(TxtEdit.text)
+
+
+func _on_v_split_container_dragged(offset: int) -> void:
+	Cnf.set_value("options", "vsplit_offset", offset)
+	Cnf.save(_config_path)
+
+
+func _on_btn_file_name_pressed() -> void:
+	sfx_openfile.play()

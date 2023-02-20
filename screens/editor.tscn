@@ -73,6 +73,10 @@ stream = ExtResource("17_1pjmf")
 [node name="Space" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("18_cyvhn")
 
+[node name="OpenFilePath" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("18_cyvhn")
+pitch_scale = 0.4
+
 [node name="NewLine" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("19_q0vu6")
 
@@ -118,11 +122,14 @@ self_modulate = Color(0.737255, 0.196078, 0.364706, 1)
 layout_mode = 2
 texture_normal = ExtResource("2_jqjc2")
 
-[node name="LabelFileName" type="Label" parent="Panel/PanelContainer/HBoxContainer"]
+[node name="BtnFileName" type="LinkButton" parent="Panel/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.294118)
 layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(1, 1, 1, 0.619608)
 text = "File name..."
+underline = 1
 
 [node name="VSeparator3" type="VSeparator" parent="Panel/PanelContainer/HBoxContainer"]
 modulate = Color(1, 1, 1, 0.396078)
@@ -274,20 +281,21 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VSplitContainerTxtFields" type="VSplitContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VSplitContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VSplitContainerTxtFields"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VSplitContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VSplitContainerTxtFields/HBoxContainer"]
 modulate = Color(1, 1, 1, 0.121569)
 layout_mode = 2
 texture = ExtResource("9_b0o4n")
 stretch_mode = 3
 
-[node name="TextEditNotes" type="TextEdit" parent="MarginContainer/VBoxContainer/VSplitContainer/HBoxContainer"]
+[node name="TextEditNotes" type="TextEdit" parent="MarginContainer/VBoxContainer/VSplitContainerTxtFields/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 0.396078)
@@ -298,7 +306,7 @@ placeholder_text = "notes..."
 wrap_mode = 1
 caret_blink = true
 
-[node name="TextEditField" type="CodeEdit" parent="MarginContainer/VBoxContainer/VSplitContainer"]
+[node name="TextEditField" type="CodeEdit" parent="MarginContainer/VBoxContainer/VSplitContainerTxtFields"]
 custom_minimum_size = Vector2(0, 307)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -349,6 +357,7 @@ access = 2
 filters = PackedStringArray("*.ytxt;YText File", "*.txt;Text File")
 
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnCloseFile" to="." method="close_file"]
+[connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnFileName" to="." method="_on_btn_file_name_pressed"]
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnOpenFile" to="." method="_on_btn_open_file_pressed"]
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnSave" to="." method="save_file"]
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnExportText" to="." method="_on_btn_export_text_pressed"]
@@ -357,8 +366,9 @@ filters = PackedStringArray("*.ytxt;YText File", "*.txt;Text File")
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnMinimize" to="." method="_on_btn_win_action" binds= ["min"]]
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnMaximize" to="." method="_on_btn_win_action" binds= ["max"]]
 [connection signal="pressed" from="Panel/PanelContainer/HBoxContainer/BtnCloseWin" to="." method="_on_btn_win_action" binds= ["close"]]
-[connection signal="caret_changed" from="MarginContainer/VBoxContainer/VSplitContainer/TextEditField" to="." method="_on_text_edit_field_caret_changed"]
-[connection signal="lines_edited_from" from="MarginContainer/VBoxContainer/VSplitContainer/TextEditField" to="." method="_on_text_edit_field_lines_edited_from"]
+[connection signal="dragged" from="MarginContainer/VBoxContainer/VSplitContainerTxtFields" to="." method="_on_v_split_container_dragged"]
+[connection signal="caret_changed" from="MarginContainer/VBoxContainer/VSplitContainerTxtFields/TextEditField" to="." method="_on_text_edit_field_caret_changed"]
+[connection signal="lines_edited_from" from="MarginContainer/VBoxContainer/VSplitContainerTxtFields/TextEditField" to="." method="_on_text_edit_field_lines_edited_from"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BtnClearLineNote" to="." method="_on_btn_clear_line_note_pressed"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/LineEditLineNote" to="." method="_on_line_edit_line_note_text_changed"]
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/LineEditLineNote" to="." method="_on_line_edit_line_note_text_submitted"]
